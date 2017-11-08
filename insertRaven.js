@@ -3123,10 +3123,20 @@ var CODE = '(' + function() {
   });
 } + ')();';
 
-
-(function() {
+var insertRaven = function() {
   var parentEl = (document.head || document.documentElement);
   var script = document.createElement('script');
   script.textContent = CODE;
   parentEl.insertBefore(script, parentEl.firstChild);
+};
+
+(function() {
+  var url = window.location.href;
+  chrome.storage.local.get(url, function(items) {
+    console.log(items);
+    var dsn = items[url];
+    if (dsn) {
+      insertRaven();
+    }
+  });
 })();

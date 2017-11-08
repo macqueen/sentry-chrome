@@ -15,5 +15,9 @@
     "matches": ["http://*/*", "https://*/*"],
     "run_at": "document_start"
   }],
-  "web_accessible_resources": ["raven.js"]
+
+  "permissions": [
+    "storage",
+    "tabs"
+  ]
 }
