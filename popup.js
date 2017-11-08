@@ -8,8 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
       items[url] = dsnEl.value;
       chrome.storage.local.set(items, function() {
         // TODO: handle failure
+        chrome.tabs.executeScript(null, {
+          code: 'window.location.reload();'
+        })
+        dsnEl.value = '';
       });
-      dsnEl.value = '';
     });
   });
 });

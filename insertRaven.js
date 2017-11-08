@@ -3133,7 +3133,6 @@ var insertRaven = function() {
 (function() {
   var url = window.location.href;
   chrome.storage.local.get(url, function(items) {
-    console.log(items);
     var dsn = items[url];
     if (dsn) {
       insertRaven();
