@@ -3142,9 +3142,9 @@ var insertRaven = function(dsn) {
 
 
 (function() {
-  var url = window.location.href;
-  chrome.storage.local.get(url, function(items) {
-    var dsn = items[url];
+  var hostname = window.location.hostname;
+  chrome.storage.local.get(hostname, function(items) {
+    var dsn = items[hostname];
     dsn && insertRaven(dsn);
   });
 })();
