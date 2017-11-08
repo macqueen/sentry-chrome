@@ -3123,19 +3123,28 @@ var CODE = '(' + function() {
   });
 } + ')();';
 
-var insertRaven = function() {
+
+var getInstallScript = function(dsn) {
+  return 'Raven.config("' + dsn + '").install();';
+};
+
+
+var insertRaven = function(dsn) {
   var parentEl = (document.head || document.documentElement);
   var script = document.createElement('script');
   script.textContent = CODE;
   parentEl.insertBefore(script, parentEl.firstChild);
+
+  var installScript = document.createElement('script');
+  installScript.textContent = getInstallScript(dsn);
+  parentEl.insertBefore(installScript, script.nextSibling);
 };
+
 
 (function() {
   var url = window.location.href;
   chrome.storage.local.get(url, function(items) {
     var dsn = items[url];
-    if (dsn) {
-      insertRaven();
-    }
+    dsn && insertRaven(dsn);
   });
 })();
