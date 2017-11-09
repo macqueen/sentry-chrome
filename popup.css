@@ -71,3 +71,10 @@ div.break {
   margin: 10px auto;
   clear: right;
 }
+
+span#error-count {
+  color: #e03e2f;
+  display: inline-block;
+  float: right;
+  font-weight: 600;
+}

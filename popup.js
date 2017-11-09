@@ -4,6 +4,13 @@ var getHostname = function(url) {
   return location.hostname;
 };
 
+var pluralize = function(word, count) {
+  if (count === 1) {
+    return word;
+  }
+  return word + 's';
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   chrome.tabs.query({active: true}, function(tabs) {
     var hostname = getHostname(tabs[0].url);
@@ -51,4 +58,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     document.getElementById('dsn').value = '';
   });
+
+  var errorCount = 0;
+
+  chrome.webRequest.onBeforeRequest.addListener(function(details) {
+    errorCount += 1;
+    var errEl = document.getElementById('error-count');
+    errEl.textContent = errorCount + pluralize(' Error', errorCount) + ' tracked';
+  }, {urls: ['*://sentry.io/api/*/store/*']})
 });
