@@ -1,32 +1,41 @@
 <!doctype html>
 <html>
   <head>
-    <title>Getting Started Extension's Popup</title>
-    <style type="text/css">
-      body {
-        margin: 10px;
-        white-space: nowrap;
-      }
-
-      h1 {
-        font-size: 15px;
-      }
-
-      #container {
-        align-items: center;
-        display: flex;
-        justify-content: space-between;
-      }
-    </style>
+    <title>Sentry</title>
+    <link rel="stylesheet" type="text/css" href="popup.css">
     <script src="popup.js"></script>
   </head>
 
   <body>
-    <h1>Sentry</h1>
     <div id="container">
+      <div class="row header">
+        <img src="sentry_full_logo.png">
+      </div>
       <form id="form">
-        <label>Enter your DSN</label><input type="text" name="dsn" id="dsn"/>
-        <button type="submit">Configure</button>
+        <div class="row">
+          <label>Enter your DSN</label>
+        </div>
+        <div class="row">
+          <input type="text" name="dsn" id="dsn"/>
+        </div>
+        <div class="row submit">
+          <button type="submit">Configure</button>
+        </div>
+      </form>
+      <div class="break"></div>
+      <form id="clear">
+        <div class="row">
+          <label>Clear Sentry installs configured by this extension</label>
+        </div>
+        <div class="row">
+          <input type="radio" name="clearInstalls" id="all" value="all" />
+          <label for="all">All websites</label>
+          <input type="radio" name="clearInstalls" id="current" value="current" />
+          <label for="current">Current website</label>
+        </div>
+        <div class="row submit">
+          <button type="submit" class="submit">Clear</button>
+        </div>
       </form>
     </div>
   </body>
