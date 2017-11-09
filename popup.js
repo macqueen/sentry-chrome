@@ -5,7 +5,7 @@ var getHostname = function(url) {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('form').addEventListener('submit', function(evt) {
+  document.getElementById('dsn-form').addEventListener('submit', function(evt) {
     evt.preventDefault();
     var dsnEl = document.getElementById('dsn');
     chrome.tabs.query({active: true}, function(tabs) {
@@ -20,5 +20,25 @@ document.addEventListener('DOMContentLoaded', () => {
         dsnEl.value = '';
       });
     });
+  });
+
+  document.getElementById('clear-form').addEventListener('submit', function(evt) {
+    evt.preventDefault();
+    var radios = document.getElementsByName('clearInstalls');
+    var value;
+    for (var i = 0; i < radios.length; i++) {
+      if (radios[i].checked) {
+        value = radios[i].value;
+        break;
+      }
+    }
+    if (value === 'all') {
+      chrome.storage.local.clear();
+    } else if (value === 'current') {
+      chrome.tabs.query({active: true}, function(tabs) {
+        var url = tabs[0].url;
+        chrome.storage.local.remove(getHostname(url));
+      });
+    }
   });
 });
