@@ -5,6 +5,16 @@ var getHostname = function(url) {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  chrome.tabs.query({active: true}, function(tabs) {
+    var hostname = getHostname(tabs[0].url);
+    chrome.storage.local.get(hostname, function(items) {
+      var dsn = items[hostname];
+      if (dsn) {
+        document.getElementById('dsn').value = dsn;
+      }
+    });
+  });
+
   document.getElementById('dsn-form').addEventListener('submit', function(evt) {
     evt.preventDefault();
     var dsnEl = document.getElementById('dsn');
@@ -17,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
         chrome.tabs.executeScript(null, {
           code: 'window.location.reload();'
         })
-        dsnEl.value = '';
       });
     });
   });
@@ -40,5 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
         chrome.storage.local.remove(getHostname(url));
       });
     }
+    document.getElementById('dsn').value = '';
   });
 });
